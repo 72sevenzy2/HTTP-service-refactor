@@ -10,6 +10,7 @@ func HealthHandler() http.HandlerFunc {
 		// ignore requests which arent GET
 		if r.Method != http.MethodGet {
 			http.Error(w, "invalid method", http.StatusMethodNotAllowed)
+			return
 		}
 
 		fmt.Fprintln(w, "fully operational API")
