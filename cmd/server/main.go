@@ -2,21 +2,18 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"github.com/72sevenzy2/golang-API/internal/handler"
-	"github.com/72sevenzy2/golang-API/internal/health"
+	"github.com/72sevenzy2/golang-API/internal/router"
 	"github.com/72sevenzy2/golang-API/internal/service"
+	"net/http"
 )
 
 func main() {
 	service := &service.GreetCounter{}
 
-	http.HandleFunc("/greet", handler.GreetHandler(service))
-	http.HandleFunc("/health", health.HealthHandler())
+	r := router.NewRouter(service)
 
-	fmt.Println("API running on port 8080")
-	err := http.ListenAndServe(":8080", nil)
-
+	fmt.Println("server running on port 8080")
+	err := http.ListenAndServe(":8080", r)
 	if err != nil {
 		panic(err)
 	}
