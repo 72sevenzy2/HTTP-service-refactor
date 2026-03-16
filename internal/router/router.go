@@ -15,7 +15,7 @@ func NewRouter(service service.Greeter) *chi.Mux {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	r.Get("/greet", handler.GreetHandler(service))
+	r.Post("/greet", handler.GreetHandler(service))
 	r.Get("/health", health.HealthHandler())
 
 	return r
