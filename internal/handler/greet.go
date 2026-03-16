@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"encoding/json"
 	"github.com/72sevenzy2/golang-API/internal/service"
@@ -9,7 +8,7 @@ import (
 )
 
 type GreetResponse struct {
-	Message string `json:"name"`
+	Message string `json:"message"`
 	Count int `json:"count"`
 }
 
@@ -21,9 +20,24 @@ func GreetHandler(g service.Greeter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req GreetRequest
 
-		err := json.NewDecoder(r.Body).Decode(req)
+		err := json.NewDecoder(r.Body).Decode(&req)
 		if err != nil {
-			json.
+			response.Error(w, http.StatusBadRequest, "invalid json")
+			return
 		}
+
+		msg, count, err := g.Greet(req.Name)
+
+		if err != nil {
+			response.Error(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		resp := GreetResponse{
+			Message: msg,
+			Count: count,
+		}
+
+		response.Json(w, http.StatusOK, resp)
 	}
 }
