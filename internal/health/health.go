@@ -1,8 +1,8 @@
 package health
 
 import (
+	"github.com/72sevenzy2/golang-API/internal/response"
 	"net/http"
-	"fmt"
 )
 
 func HealthHandler() http.HandlerFunc {
@@ -13,6 +13,10 @@ func HealthHandler() http.HandlerFunc {
 			return
 		}
 
-		fmt.Fprintln(w, "fully operational API")
+		resp := map[string]string{
+			"message": "fully working API",
+		}
+
+		response.Json(w, http.StatusOK, resp)
 	}
 }
