@@ -3,3 +3,5 @@ module github.com/72sevenzy2/golang-API
 go 1.25.5
 
 require github.com/go-chi/chi/v5 v5.2.5
+
+require github.com/72sevenzy2/http-router v0.0.0-20260408100213-31e7783ceb25 // indirect
